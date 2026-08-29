@@ -46,26 +46,40 @@ Production assets will be built into the `dist/` directory.
 
 ## 🌐 GitHub Pages Deployment
 
-This repository includes a GitHub Actions workflow (`.github/workflows/deploy.yml`) for automated deployment to GitHub Pages.
-
-### How to enable GitHub Pages:
+### Option 1: Automated Deployment with GitHub Actions (Recommended)
 
 1. Push your repository to GitHub:
    ```bash
    git add .
-   git commit -m "Initial commit - Ready for deployment"
-   git branch -M main
-   git remote add origin https://github.com/<your-username>/<your-repo-name>.git
-   git push -u origin main
+   git commit -m "Configure GitHub Pages deployment"
+   git push origin main
    ```
 
-2. On GitHub, navigate to:
-   **Settings** ➔ **Pages** (under Code and automation).
+2. On GitHub, go to your repository settings:
+   **Settings** ➔ **Pages** (in the left sidebar).
 
 3. Under **Build and deployment** ➔ **Source**:
-   Select **GitHub Actions**.
+   Change from *"Deploy from a branch"* to **"GitHub Actions"**.
 
-4. Every push to the `main` or `master` branch will automatically build and publish your site!
+4. Go to the **Actions** tab on GitHub to verify the workflow runs. Once complete, your site will be live at `https://<username>.github.io/<repo-name>/`.
+
+---
+
+### Option 2: 1-Command CLI Deployment (`gh-pages`)
+
+If you prefer deploying via command line:
+```bash
+npm run deploy
+```
+This builds your project and publishes the compiled static files to the `gh-pages` branch. Then go to **Settings ➔ Pages** and set branch to `gh-pages` / `/ (root)`.
+
+---
+
+### ⚠️ Why was the page blank before?
+
+If GitHub Pages is set to **"Deploy from a branch: main (root)"**, GitHub serves the uncompiled source code (`/src/main.tsx`). Web browsers cannot execute TypeScript/JSX directly without building it first, which results in a blank screen.
+
+Switching **Source** to **"GitHub Actions"** (Option 1) or running `npm run deploy` (Option 2) compiles the application with Vite so that the browser receives production-ready HTML, CSS, and JS bundles.
 
 ---
 
